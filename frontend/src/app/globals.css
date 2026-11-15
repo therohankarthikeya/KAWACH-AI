@@ -1,0 +1,69 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-outfit), "Segoe UI", sans-serif;
+  --font-mono: var(--font-code), ui-monospace, monospace;
+  --color-ink: #061018;
+  --color-panel: #0c1722;
+  --color-line: rgba(148, 196, 186, 0.18);
+  --color-teal: #2ee6c7;
+  --color-gold: #e4c27a;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse 80% 50% at 10% -10%, rgba(46, 230, 199, 0.14), transparent 55%),
+    radial-gradient(ellipse 50% 40% at 100% 0%, rgba(228, 194, 122, 0.08), transparent 45%),
+    var(--color-ink);
+  color: #e7eef6;
+  font-family: var(--font-sans);
+}
+
+body::before {
+  content: "";
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(46, 230, 199, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(46, 230, 199, 0.035) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+}
+
+@keyframes kawach-scan {
+  0% {
+    top: -8%;
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  100% {
+    top: 108%;
+    opacity: 0;
+  }
+}
+
+.scanline {
+  animation: kawach-scan 2.6s linear infinite;
+}
+
+@keyframes kawach-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(46, 230, 199, 0.45);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(46, 230, 199, 0);
+  }
+}
+
+.step-live {
+  animation: kawach-pulse 1.6s ease-out infinite;
+}
