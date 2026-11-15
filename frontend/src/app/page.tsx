@@ -441,16 +441,16 @@ export default function HomePage() {
 
             {showCamera ? (
               <Webcam
-                ref={webcamRef}
-                audio={false}
-                mirrored
-                screenshotFormat="image/jpeg"
-                screenshotQuality={0.82}
-                videoConstraints={{ facingMode: "user", width: 1280, height: 720 }}
-                onUserMedia={() => setCameraError(false)}
-                onUserMediaError={() => setCameraError(true)}
-                className="h-full w-full object-cover"
-              />
+              ref={webcamRef}
+              audio={false}
+              screenshotFormat="image/jpeg"
+              videoConstraints={{ facingMode: "user" }}
+              onUserMediaError={(err) => {
+                console.error("Webcam error:", err);
+                alert("Camera error: " + String(err));
+              }}
+              className="w-full rounded-xl"
+            />
             ) : photo ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img src={photo} alt="Captured live selfie" className="h-full w-full object-cover" />
