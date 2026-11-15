@@ -30,6 +30,8 @@ TOP_VISUAL_MATCHES = 10
 SIMILARITY_CUTOFF = 75.0
 
 app = FastAPI(title="KAWACH-AI")
+from actions import router as actions_router
+app.include_router(actions_router)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:3000"],
