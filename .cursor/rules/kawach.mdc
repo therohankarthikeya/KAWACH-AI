@@ -1,0 +1,50 @@
+---
+description: KAWACH-AI stack and privacy constraints
+alwaysApply: true
+---
+
+# KAWACH-AI
+
+## Stack
+
+- Frontend lives in `/frontend`: Next.js with Tailwind.
+- Backend lives in `/backend`: Python FastAPI.
+- Do not add a second frontend or backend stack.
+
+## RAM-only image processing
+
+Process images in memory only. Use `BytesIO` (or an equivalent in-memory buffer) and clear it as soon as processing finishes.
+
+```python
+# ✅ GOOD
+buf = io.BytesIO(frame_bytes)
+try:
+    image = Image.open(buf)
+    result = analyze(image)
+finally:
+    buf.seek(0)
+    buf.truncate(0)
+    buf.close()
+```
+
+```python
+# ❌ BAD — persists a photo or user data
+path.write_bytes(frame_bytes)
+open("capture.jpg", "wb").write(frame_bytes)
+db.save(user_id, frame_bytes)
+```
+
+Never write photos or other user data to disk or a database.
+
+## Live webcam only
+
+Capture frames from the live webcam. Do not add a file-upload input, a file picker, or an API that accepts an uploaded image file.
+
+```tsx
+// ❌ BAD
+<input type="file" accept="image/*" />
+```
+
+## Government ID numbers
+
+Never ask for, log, or echo a full government ID number. If an ID must be referenced, keep only a non-reversible check or a masked fragment that cannot reconstruct the full number.
