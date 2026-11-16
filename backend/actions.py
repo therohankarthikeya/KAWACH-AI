@@ -1,12 +1,13 @@
 import os
-from fastapi import APIRouter, HTTPException
+import httpx
+from fastapi import APIRouter, BackgroundTasks, HTTPException
 from pydantic import BaseModel
 import google.generativeai as genai
 
 router = APIRouter(prefix="/api")
 
 # Configure Gemini AI
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "").strip()
 if GEMINI_API_KEY:
     genai.configure(api_key=GEMINI_API_KEY)
 
@@ -24,6 +25,14 @@ class ActionResponse(BaseModel):
     instructions: str
     prefilled_content: str
     action_url: str
+
+
+class BugReportRequest(BaseModel):
+    category: str
+    description: str
+    phase: str = "idle"
+    user_agent: str = "Unknown"
+    timestamp: str = ""
 
 
 @router.post("/generate-action", response_model=ActionResponse)
@@ -54,7 +63,7 @@ def generate_action(req: ActionRequest):
             detail="GEMINI_API_KEY is missing in backend/.env for generating email drafts.",
         )
 
-    model = genai.GenerativeModel("gemini-1.5-flash")
+    model = genai.GenerativeModel("gemini-2.5-flash")
 
     if req.action_type == "website_takedown":
         prompt = (
@@ -100,3 +109,26 @@ def generate_action(req: ActionRequest):
         )
 
     raise HTTPException(status_code=400, detail="Invalid action type specified.")
+
+
+def append_bug_to_google_doc(report: BugReportRequest):
+    webhook_url = os.getenv("GOOGLE_DOC_BUG_WEBHOOK_URL", "").strip()
+    if not webhook_url:
+        print("[KAWACH] Bug report skipped: GOOGLE_DOC_BUG_WEBHOOK_URL not set in .env")
+        return
+
+    try:
+        with httpx.Client(follow_redirects=True, timeout=15.0) as client:
+            res = client.post(webhook_url, json=report.model_dump())
+            res.raise_for_status()
+        print("[KAWACH] Bug report appended to Google Doc.")
+    except Exception as exc:
+        print(f"[KAWACH] Failed to append bug to Google Doc: {exc}")
+
+
+@router.post("/report-bug")
+def report_bug(req: BugReportRequest, background_tasks: BackgroundTasks):
+    if not req.description.strip():
+        raise HTTPException(status_code=400, detail="Bug description cannot be empty")
+    background_tasks.add_task(append_bug_to_google_doc, req)
+    return {"status": "queued", "message": "Bug report logged to Google Docs."}

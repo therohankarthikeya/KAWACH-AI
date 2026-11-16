@@ -2,6 +2,7 @@
 
 import {
   AlertTriangle,
+  Bug,
   Camera,
   Check,
   Copy,
@@ -19,6 +20,7 @@ import {
 } from "lucide-react";
 import { useEffect, useId, useMemo, useRef, useState } from "react";
 import Webcam from "react-webcam";
+import BugReportModal from "@/components/BugReportModal";
 import IntroSplash from "@/components/IntroSplash";
 import ParticleShieldHero from "@/components/ParticleShieldHero";
 
@@ -155,6 +157,7 @@ export default function HomePage() {
   const [results, setResults] = useState<ScanHit[] | null>(null);
   const [notice, setNotice] = useState<OpenNotice | null>(null);
   const [copied, setCopied] = useState(false);
+  const [bugOpen, setBugOpen] = useState(false);
 
   const clearTimers = () => {
     timers.current.forEach((id) => window.clearTimeout(id));
@@ -394,10 +397,21 @@ export default function HomePage() {
             </h1>
           </div>
         </div>
-        <span className="inline-flex items-center gap-1.5 rounded-full border border-white/[0.08] bg-white/[0.04] px-3.5 py-1.5 font-mono text-[11px] tracking-wide text-slate-400">
-          <span className="size-1.5 rounded-full bg-teal-400" />
-          FINGERS CROSSED
-        </span>
+        <div className="flex flex-wrap items-center gap-3">
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-white/[0.08] bg-white/[0.04] px-3.5 py-1.5 font-mono text-[11px] tracking-wide text-slate-400">
+            <span className="size-1.5 rounded-full bg-teal-400" />
+            RAM-Only Privacy · Zero Storage
+          </span>
+
+          <button
+            type="button"
+            onClick={() => setBugOpen(true)}
+            className="inline-flex items-center gap-1.5 rounded-full border border-amber-300/30 bg-amber-400/10 px-3.5 py-1.5 text-xs font-medium text-amber-200 transition hover:bg-amber-400/20 hover:text-white"
+          >
+            <Bug className="size-3.5 text-amber-300" aria-hidden />
+            Report Bug
+          </button>
+        </div>
       </header>
 
       <div
@@ -850,6 +864,11 @@ export default function HomePage() {
           </div>
         </div>
       )}
+      <BugReportModal
+        isOpen={bugOpen}
+        onClose={() => setBugOpen(false)}
+        currentPhase={phase}
+      />
     </div>
     </>
   );
