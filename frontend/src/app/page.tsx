@@ -454,7 +454,7 @@ export default function HomePage() {
           <div className="mb-3 flex items-center justify-between gap-3">
             <h2 className="text-sm font-medium text-white">Live webcam</h2>
             <span className="font-mono text-[11px] text-slate-400">
-              {showCamera ? "Preview in memory" : wiped ? "Frame wiped" : "Held for this scan"}
+              {showCamera ? "Hey handsome/beautiful!" : wiped ? "Frame wiped" : "Held this to process your hotness"}
             </span>
           </div>
 
