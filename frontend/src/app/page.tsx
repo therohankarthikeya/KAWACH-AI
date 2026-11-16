@@ -557,7 +557,7 @@ export default function HomePage() {
           />
 
           <label className="mt-4 block text-xs font-medium text-slate-200" htmlFor="reference">
-            Enter last 4 digits of your Aadhar Number
+            Enter last 4 digits of your Government Issued ID
           </label>
           <input
             id="reference"
