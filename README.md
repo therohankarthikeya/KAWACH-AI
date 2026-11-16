@@ -38,39 +38,57 @@
 ##  Installation & Setup
 
 ### Prerequisites
-* Python 3.10+
-* Node.js 18+
-* API Keys: `SERPAPI_API_KEY`, `SERPER_API_KEY`, and `GEMINI_API_KEY`
+
+* Git
+* Python 3.10 or newer, with `pip`
+* Node.js 20.9 or newer (npm is included with Node.js)
+* API keys for SerpApi, Serper.dev, and Google Gemini: `SERPAPI_API_KEY`, `SERPER_API_KEY`, and `GEMINI_API_KEY`
+
+After cloning the repository, open PowerShell in the repository root. Check that the prerequisites are available:
+```powershell
+git --version
+python --version
+node --version
+npm --version
+```
 
 ### 1. Backend Setup (`FastAPI`)
 ```powershell
-cd C:\KAWACH-AI\backend
-python -m venv venv
-venv\Scripts\activate
-pip install -r requirements.txt
+cd .\backend
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
 ```
 
-Create a `.env` file inside `backend/`:
+If PowerShell blocks activation, allow it for the current terminal session and activate again:
+```powershell
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+.\.venv\Scripts\Activate.ps1
+```
+
+Create `backend\.env` and add your API keys (replace the example values; do not commit this file):
 ```env
-SERPAPI_API_KEY="your_serpapi_key"
-SERPER_API_KEY="your_serper_dev_key"
-GEMINI_API_KEY="your_gemini_key"
+SERPAPI_API_KEY=your_serpapi_key
+SERPER_API_KEY=your_serper_dev_key
+GEMINI_API_KEY=your_gemini_key
 ```
 
-Run the backend server:
+Keep this terminal open and start the backend from the `backend` directory:
 ```powershell
 python -m uvicorn main:app --host 127.0.0.1 --port 8000 --reload
 ```
 
 ### 2. Frontend Setup (`Next.js`)
-Open a new terminal window in Cursor:
+
+Open a second PowerShell terminal in the repository root:
 ```powershell
-cd C:\KAWACH-AI\frontend
-npm install
+cd .\frontend
+npm ci
 npm run dev
 ```
 
-Open your browser and navigate to **`http://localhost:3000`**.
+Keep both servers running and open **`http://localhost:3000`** in your browser. Allow camera access when prompted to use the live-selfie scan. The frontend connects to the backend at `http://127.0.0.1:8000` by default. The first visual scan may need an internet connection to download DeepFace model weights.
 
 ---
 

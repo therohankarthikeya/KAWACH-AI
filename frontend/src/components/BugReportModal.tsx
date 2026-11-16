@@ -95,7 +95,7 @@ export default function BugReportModal({
                 Report a Bug
               </h2>
               <p className="text-[11px] text-slate-400">
-                Appends directly to our Google Doc without touching scan memory.
+                Specify your report so that we can fix it in later updates!
               </p>
             </div>
           </div>
@@ -114,7 +114,7 @@ export default function BugReportModal({
             <span className="flex size-10 items-center justify-center rounded-full bg-emerald-400/15 text-emerald-300">
               <Check className="size-5" />
             </span>
-            <p className="text-sm font-medium text-white">Bug logged to Google Docs!</p>
+            <p className="text-sm font-medium text-white">Bug logged!</p>
             {GOOGLE_DOC_VIEW_URL && (
               <a
                 href={GOOGLE_DOC_VIEW_URL}
@@ -194,7 +194,7 @@ export default function BugReportModal({
                 ) : (
                   <>
                     <Send className="size-3.5" />
-                    Submit to Google Doc
+                    Submit your Report
                   </>
                 )}
               </button>
