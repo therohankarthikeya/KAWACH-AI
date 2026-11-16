@@ -3,67 +3,77 @@
 @theme {
   --font-sans: var(--font-outfit), "Segoe UI", sans-serif;
   --font-mono: var(--font-code), ui-monospace, monospace;
-  --color-ink: #061018;
-  --color-panel: #0c1722;
-  --color-line: rgba(148, 196, 186, 0.18);
-  --color-teal: #2ee6c7;
-  --color-gold: #e4c27a;
 }
 
-html {
+html,
+body {
+  min-height: 100vh;
+  background-color: #060a10;
+  color: #f1f5f9;
+  color-scheme: dark;
   scroll-behavior: smooth;
 }
 
-body {
-  min-height: 100vh;
-  background:
-    radial-gradient(ellipse 80% 50% at 10% -10%, rgba(46, 230, 199, 0.14), transparent 55%),
-    radial-gradient(ellipse 50% 40% at 100% 0%, rgba(228, 194, 122, 0.08), transparent 45%),
-    var(--color-ink);
-  color: #e7eef6;
-  font-family: var(--font-sans);
-}
-
-body::before {
-  content: "";
-  pointer-events: none;
-  position: fixed;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(46, 230, 199, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(46, 230, 199, 0.035) 1px, transparent 1px);
-  background-size: 56px 56px;
-  mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
-}
-
-@keyframes kawach-scan {
+/* Mirror reflection sweep across the shield */
+@keyframes mirror-sweep {
   0% {
-    top: -8%;
-    opacity: 0;
+    transform: translateX(-170%) rotate(25deg);
   }
-  12% {
-    opacity: 1;
-  }
+  60%,
   100% {
-    top: 108%;
-    opacity: 0;
+    transform: translateX(270%) rotate(25deg);
   }
 }
 
-.scanline {
-  animation: kawach-scan 2.6s linear infinite;
+.mirror-beam {
+  animation: mirror-sweep 2.2s cubic-bezier(0.25, 0.8, 0.25, 1) infinite;
 }
 
-@keyframes kawach-pulse {
+/* Soft glow behind the mirror shield */
+@keyframes shield-glow {
   0%,
   100% {
-    box-shadow: 0 0 0 0 rgba(46, 230, 199, 0.45);
+    opacity: 0.5;
+    transform: scale(0.96);
   }
   50% {
-    box-shadow: 0 0 0 8px rgba(46, 230, 199, 0);
+    opacity: 0.9;
+    transform: scale(1.05);
   }
 }
 
-.step-live {
-  animation: kawach-pulse 1.6s ease-out infinite;
+.shield-halo {
+  animation: shield-glow 2.8s ease-in-out infinite;
+}
+
+/* Camera framing guide sweep */
+@keyframes frame-sweep {
+  0% {
+    top: -10%;
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.85;
+  }
+  85% {
+    opacity: 0.85;
+  }
+  100% {
+    top: 105%;
+    opacity: 0;
+  }
+}
+
+.camera-sweep {
+  animation: frame-sweep 3s ease-in-out infinite;
+}
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
 }

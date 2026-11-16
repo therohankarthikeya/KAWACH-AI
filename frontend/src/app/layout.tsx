@@ -13,9 +13,9 @@ const mono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "KAWACH-AI",
+  title: "KAWACH",
   description:
-    "RAM-only live selfie scan for personal image exposure. Frames stay in memory and are wiped after the scan.",
+    "Check where your photos appear online using a live selfie. Nothing is saved to disk.",
 };
 
 export default function RootLayout({
@@ -24,8 +24,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${outfit.variable} ${mono.variable} antialiased`}>
+    <html lang="en" className="dark">
+      <body
+        className={`${outfit.variable} ${mono.variable} min-h-screen bg-[#060a10] text-slate-100 antialiased`}
+      >
         {children}
       </body>
     </html>
