@@ -13,7 +13,7 @@
 
 ---
 
-## 🚀 Key Features
+##  Key Features
 
 * **Zero-Persistence RAM Architecture:** Live webcam selfies and query parameters are processed exclusively in volatile memory (`io.BytesIO`) and purged the millisecond a scan initializes. Zero disk writes, zero database storage.
 * **Indian Market Localization:** Strictly bound to Indian regional indices (`gl="in"`, `location="India"`, `google.co.in`) via SerpApi (Google Lens) and Serper.dev for precise local web mention tracking.
@@ -23,7 +23,7 @@
 
 ---
 
-## 🛠️ System Architecture
+##  System Architecture
 
 * **Frontend:** Next.js (App Router), React, Tailwind CSS, Lucide Icons, and responsive dashboard UI.
 * **Backend:** FastAPI (Python), handling asynchronous API requests and secure memory management.
@@ -35,7 +35,7 @@
 
 ---
 
-## ⚙️ Installation & Setup
+##  Installation & Setup
 
 ### Prerequisites
 * Python 3.10+
@@ -74,7 +74,7 @@ Open your browser and navigate to **`http://localhost:3000`**.
 
 ---
 
-## 🛡️ Usage Workflow
+##  Usage Workflow
 
 1. **Capture Live Selfie:** Allow webcam access and capture a live frame (file uploads from disk are intentionally blocked for security).
 2. **Enter Parameters:** Provide your full name, email address, and reference keyword (full government ID numbers are automatically flagged and blocked).
@@ -87,5 +87,5 @@ Open your browser and navigate to **`http://localhost:3000`**.
 
 ---
 
-## 📄 License
+##  License
 Built for privacy and cyber defense empowerment in India.
