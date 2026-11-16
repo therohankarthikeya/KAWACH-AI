@@ -1,4 +1,5 @@
-# KAWACH-AI
+# KAWACH-AI: Indian Cyber-Biometric Shield & Automated Takedown Suite
+
 
 **A Zero-Storage Personal Digital Footprint Scanner & Identity Protection Shield**  
 *Built for **AI HUB 2K26***
@@ -8,59 +9,83 @@
 ![DeepFace](https://img.shields.io/badge/Biometrics-DeepFace%20(ArcFace)-blue?style=flat-square)
 ![Gemini](https://img.shields.io/badge/AI%20Legal%20Shield-Gemini%202.5%20Flash-4285F4?style=flat-square&logo=google)
 
----
-
-## The Problem
-Photos and personal details uploaded online are frequently scraped, reposted without consent, or used to create fake impersonation ("catfish") profiles. Standard reverse-image search tools match backgrounds and clothing rather than facial geometry—and even when victims find unauthorized uploads, they rarely know how to file a formal cybercrime complaint or draft a legal takedown notice.
-
-##  Our Solution
-**KAWACH-AI** acts as a personal digital bodyguard. Using a **live selfie** and optional public identifiers, it scans the indexed web for unauthorized appearances of your face or personal information, verifies facial matches using biometric embeddings, and generates **one-click legal takedown notices and Indian Cyber Crime reports**.
+**KAWACH-AI** is a dual-service, privacy-first OSINT and digital footprint auditing platform engineered specifically for the Indian cyberspace. It combines live facial biometric matching, localized search indexing, and AI-driven legal notice generation to help individuals detect unauthorized likeness usage and instantly initiate formal takedown or cybercrime reporting workflows.
 
 ---
 
-##  Privacy-First & Anti-Stalker Architecture
+## 🚀 Key Features
 
-KAWACH-AI is engineered with strict privacy guardrails so the platform cannot be misused to spy on others or leak sensitive user data:
-
-1. **Anti-Stalker Live Camera Gate (No File Uploads):** All file-upload dropzones are disabled. Users must capture a real-time selfie via webcam (`react-webcam`), preventing bad actors from uploading someone else's photo.
-2. **RAM-Only Zero-Storage Pipeline:** Uploaded selfies and search inputs are processed strictly in volatile memory (`io.BytesIO`) and wiped immediately once the scan completes. **Zero photos, facial vectors, or user records are ever written to disk or stored in a database.**
-3. **Safe Identifier Handling:** KAWACH-AI never requests or logs full government ID numbers (such as full Aadhaar numbers). Users can optionally search using their name, public handle, or a non-sensitive reference keyword / last 4 digits.
-
----
-
-##  Key Features
-
-* **Two-Stage Biometric Face Discovery:**
-  * **Broad Web Recall:** Uploads a temporary, compressed in-memory frame to **SerpApi (Google Lens)** to discover visual matches across public websites, blogs, and indexed social media previews.
-  * **Biometric False-Positive Filter:** Runs candidate thumbnails through **DeepFace (`ArcFace`)** to compute cosine similarity scores, filtering out lookalikes and keeping high-confidence facial matches (`> 75%`).
-* **Public Info & Document Trace:** Searches indexed web pages and public documents for accidental exposure of the user's name, social handles, or reference keywords.
-* **3-Click AI Action Shield (Powered by Gemini 2.5 Flash):**
-  1. **Report to Indian Cyber Crime:** Generates a structured, copy-ready incident report formatted for India's **National Cyber Crime Reporting Portal (`cybercrime.gov.in`)** and the **1930** helpline, complete with unauthorized URLs, timestamps, and incident summaries.
-  2. **Email Website to Remove:** Extracts visible support/grievance contacts from the target domain and drafts a formal takedown demand.
-  3. **Contact Uploader:** Identifies visible uploader handles or contact details and drafts a firm removal notice prior to legal escalation.
+* **Zero-Persistence RAM Architecture:** Live webcam selfies and query parameters are processed exclusively in volatile memory (`io.BytesIO`) and purged the millisecond a scan initializes. Zero disk writes, zero database storage.
+* **Indian Market Localization:** Strictly bound to Indian regional indices (`gl="in"`, `location="India"`, `google.co.in`) via SerpApi (Google Lens) and Serper.dev for precise local web mention tracking.
+* **DeepFace ArcFace Biometric Engine:** Verifies visual candidate thumbnails against live facial embeddings with a strict cosine similarity threshold ($\ge 75\%$).
+* **AI Legal Takedown Suite (Gemini 2.5 Flash):** Instantly generates formal legal DMCA, privacy notice emails, or civil uploader warnings tailored to the specific target domain.
+* **Official Enforcement Integration:** Direct workflows linking victims to India's **National Cyber Crime Reporting Portal (`cybercrime.gov.in`)** and the national cyber fraud emergency helpline (**1930**).
 
 ---
 
-##  System Architecture
+## 🛠️ System Architecture
 
-```text
-[Live Webcam Selfie + Optional Name/Keyword]
-                     │
-                     ▼  (In-Memory BytesIO — No Disk Write)
-       [FastAPI Backend (/api/scan)]
-          ├──► SerpApi Google Lens ──► Candidate URLs & Thumbnails
-          │                                   │
-          │                                   ▼
-          │                       DeepFace (ArcFace Verification)
-          │                       [Keep Cosine Similarity > 75%]
-          │
-          └──► SerpApi Web Search  ──► Public Name / Document Traces
-                     │
-                     ▼  (Memory Buffers Wiped Immediately)
-     [Results Dashboard + Similarity Scores]
-                     │
-                     ▼  (On User Action Click)
-  [Gemini 2.5 Flash (/api/generate-action)]
-     ├──► cybercrime.gov.in / 1930 Incident Report
-     ├──► Website Grievance Takedown Email
-     └──► Uploader Removal Warning Message
+* **Frontend:** Next.js (App Router), React, Tailwind CSS, Lucide Icons, and responsive dashboard UI.
+* **Backend:** FastAPI (Python), handling asynchronous API requests and secure memory management.
+* **APIs & AI:** 
+  * SerpApi (Google Lens visual search)
+  * Serper.dev (localized text-based web mentions)
+  * Google Gemini 2.5 Flash (legal draft generation)
+  * DeepFace (ArcFace facial recognition)
+
+---
+
+## ⚙️ Installation & Setup
+
+### Prerequisites
+* Python 3.10+
+* Node.js 18+
+* API Keys: `SERPAPI_API_KEY`, `SERPER_API_KEY`, and `GEMINI_API_KEY`
+
+### 1. Backend Setup (`FastAPI`)
+```powershell
+cd C:\KAWACH-AI\backend
+python -m venv venv
+venv\Scripts\activate
+pip install -r requirements.txt
+```
+
+Create a `.env` file inside `backend/`:
+```env
+SERPAPI_API_KEY="your_serpapi_key"
+SERPER_API_KEY="your_serper_dev_key"
+GEMINI_API_KEY="your_gemini_key"
+```
+
+Run the backend server:
+```powershell
+python -m uvicorn main:app --host 127.0.0.1 --port 8000 --reload
+```
+
+### 2. Frontend Setup (`Next.js`)
+Open a new terminal window in Cursor:
+```powershell
+cd C:\KAWACH-AI\frontend
+npm install
+npm run dev
+```
+
+Open your browser and navigate to **`http://localhost:3000`**.
+
+---
+
+## 🛡️ Usage Workflow
+
+1. **Capture Live Selfie:** Allow webcam access and capture a live frame (file uploads from disk are intentionally blocked for security).
+2. **Enter Parameters:** Provide your full name, email address, and reference keyword (full government ID numbers are automatically flagged and blocked).
+3. **Execute Scan:** The system splits into two independent parallel pipelines (Serper text mention search + DeepFace visual match search).
+4. **Review Results:** Inspect verified matches categorized by domain, match type, and similarity score.
+5. **Take Action:** Click any of the three action buttons:
+   * **Report to Indian Cyber Crime:** Get direct links to `cybercrime.gov.in` and guidance on calling `1930`.
+   * **Email Website to Remove:** Generate and copy a custom AI legal takedown notice.
+   * **Contact Uploader:** Draft a polite yet firm direct removal request message.
+
+---
+
+## 📄 License
+Built for privacy and cyber defense empowerment in India.
